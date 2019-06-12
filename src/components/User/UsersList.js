@@ -6,7 +6,8 @@ import "/../node_modules/alertifyjs/build/css/alertify.css";
 
 import {
   deleteUserFromArray,
-  getArrayOfUsers
+  getArrayOfUsers,
+  returnUserByIndex
 } from "../../utils/StorageHelper";
 
 const UsersList = props => {
@@ -16,9 +17,10 @@ const UsersList = props => {
     props.history.push("/users/edit/" + index);
   };
   const deleteUser = index => {
+    let user = returnUserByIndex(index);
     confirm(
-      "title",
-      "message",
+      "Delete User",
+      `Do you want to delete user ${user.name}?`,
       () => {
         deleteUserFromArray(index);
         setUsers(getArrayOfUsers());

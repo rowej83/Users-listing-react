@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import useForm from "react-hook-form";
 import { saveUserToLocalStorage } from "../../utils/StorageHelper";
 import { User } from "../../utils/UserClass";
+import { confirm } from "alertifyjs";
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
@@ -11,8 +12,17 @@ const UserAdd = props => {
   const { handleSubmit, register, errors } = useForm();
 
   const onSubmit = values => {
-    saveUserToLocalStorage(new User(values.name, values.age, values.email));
-    props.history.push("/");
+    confirm(
+      `Add user: ${values.name}`,
+      function() {
+        console.log("added");
+        saveUserToLocalStorage(new User(values.name, values.age, values.email));
+        props.history.push("/");
+      },
+      function() {
+        console.log("not added");
+      }
+    );
   };
 
   return (
@@ -111,7 +121,7 @@ const UserAdd = props => {
           </div>
         </div>
 
-        <p class="" style={{ margin: "0 auto" }}>
+        <p class="" style={{ margin: "0 auto", textAlign: "center" }}>
           <button
             type="submit"
             class="button is-primary"
@@ -122,9 +132,6 @@ const UserAdd = props => {
 
           <Link to="/" class="button">
             Cancel
-          </Link>
-          <Link to="/" class="goBack">
-            <span style={{ fontSize: "20px" }}>←</span>
           </Link>
         </p>
       </form>

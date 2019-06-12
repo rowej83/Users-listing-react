@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { User } from "../../utils/UserClass";
 import { returnUserByIndex, updateUser } from "../../utils/StorageHelper";
 import useForm from "react-hook-form";
+import { confirm } from "alertifyjs";
 const UserEdit = props => {
   function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -17,12 +18,20 @@ const UserEdit = props => {
     setCurrentUser(returnUserByIndex(userID));
   }, [userID]);
   function updateTheUser(values) {
-    let edittedUser = {
-      index: userID,
-      User: new User(values.name, values.age, values.email)
-    };
-    updateUser(edittedUser);
-    props.history.push("/");
+    confirm(
+      `Finished editing user ${values.name}?`,
+      () => {
+        let edittedUser = {
+          index: userID,
+          User: new User(values.name, values.age, values.email)
+        };
+        updateUser(edittedUser);
+        props.history.push("/");
+      },
+      () => {
+        console.log(`Didn't update user.`);
+      }
+    );
   }
   return (
     <div>
