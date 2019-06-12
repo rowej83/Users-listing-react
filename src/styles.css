@@ -1,0 +1,56 @@
+.line-container {
+  position: relative;
+  text-align: center;
+}
+.line-container:before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  width: 100%;
+  border-bottom: 3px solid whitesmoke;
+}
+.line-container span {
+  text-align: center;
+  background-color: white;
+  padding: 0 1em;
+}
+h1 {
+  font-size: 40px;
+  text-align: center;
+  margin-top: 20px;
+}
+.full-size {
+  width: 100%;
+}
+.section {
+  padding-top: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+h1.mainheader {
+  font-size: 40px;
+  text-align: center;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+}
+
+@media screen and (min-width: 769px), print {
+  .field-label {
+    flex-basis: 0;
+    flex-grow: 0.3;
+    flex-shrink: 0;
+    margin-right: 1.5rem;
+    /* text-align: right; */
+  }
+}
+.goBack {
+  padding: 15px 5px 10px 15px;
+  /* background-color:red; */
+}
