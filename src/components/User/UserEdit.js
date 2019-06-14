@@ -10,7 +10,7 @@ const UserEdit = props => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
   }
-  // const { currentUserID, setCurrentUserID } = React.useContext(UsersContext);
+
   const { register, handleSubmit, errors } = useForm();
   const userID = props.match.params.id;
   const [CurrentUser, setCurrentUser] = React.useState({});
@@ -19,7 +19,8 @@ const UserEdit = props => {
   }, [userID]);
   function updateTheUser(values) {
     confirm(
-      `Finished editing user ${values.name}?`,
+      "User Edit",
+      `Finished editing user <b>${values.name}</b>?`,
       () => {
         let edittedUser = {
           index: userID,

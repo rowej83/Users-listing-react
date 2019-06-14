@@ -1,47 +1,26 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, Link } from "react-router-dom";
+import { User } from "./utils/UserClass";
 import UsersList from "./components/User/UsersList";
 import UserEdit from "./components/User/UserEdit";
 import UserAdd from "./components/User/UserAdd";
 import UsersContext from "./utils/UsersContext";
 import "./styles.css";
 import "../node_modules/bulma/css/bulma.css";
-import { getArrayOfUsers } from "./utils/StorageHelper";
+import { getArrayOfUsers, saveUserToLocalStorage } from "./utils/StorageHelper";
 import { createBrowserHistory } from "history";
-import Example from "./Example";
 
 const customHistory = createBrowserHistory();
-const initialUser = [
-  {
-    name: "jason",
-    age: 11,
-    email: "dsds@sdsd.com"
-  },
-  {
-    name: "jason2",
-    age: 11,
-    email: "dsds@sdsd.com"
-  },
-  {
-    name: "jason3",
-    age: 11,
-    email: "dsds@sdsd.com"
-  }
-];
 
 function App() {
-  const [currentUserID, setCurrentUserID] = React.useState({});
   const [Users, setUsers] = React.useState([]);
   React.useEffect(() => {
-    //console.log(getArrayOfUsers());
     setUsers(getArrayOfUsers());
   }, [Users]);
 
   return (
-    <UsersContext.Provider
-      value={{ currentUserID, setCurrentUserID, Users, setUsers }}
-    >
+    <UsersContext.Provider value={{ Users, setUsers }}>
       <Router history={customHistory}>
         <div>
           <h1
@@ -52,6 +31,19 @@ function App() {
           >
             User Management
           </h1>
+          <button
+            onClick={() => {
+              // let initialValues = [];
+              localStorage.clear();
+              for (let i = 0; i < 10; i++) {
+                saveUserToLocalStorage(
+                  new User(`jason-${i}`, i, `rowej83-${i}@gmail.com`)
+                );
+              }
+            }}
+          >
+            Reset Users
+          </button>
           <div class="section">
             <div class="container">
               <Link

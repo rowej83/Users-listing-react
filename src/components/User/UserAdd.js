@@ -13,9 +13,9 @@ const UserAdd = props => {
 
   const onSubmit = values => {
     confirm(
-      `Add user: ${values.name}`,
+      "Add User",
+      `Add user: <b>${values.name}</b>?`,
       function() {
-        console.log("added");
         saveUserToLocalStorage(new User(values.name, values.age, values.email));
         props.history.push("/");
       },

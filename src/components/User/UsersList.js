@@ -3,6 +3,7 @@ import { withRouter } from "react-router-dom";
 import UsersContext from "../../utils/UsersContext";
 import { confirm } from "alertifyjs";
 import "/../node_modules/alertifyjs/build/css/alertify.css";
+import $ from "jquery";
 
 import {
   deleteUserFromArray,
@@ -16,15 +17,35 @@ const UsersList = props => {
   const editUser = index => {
     props.history.push("/users/edit/" + index);
   };
+  React.useLayoutEffect(() => {
+    let mount = true;
+    if (mount) {
+      $(".outerdiv").hide();
+      $(".outerdiv").fadeIn();
+    }
+
+    return () => {
+      mount = false;
+    };
+  }, []);
   const deleteUser = index => {
     let user = returnUserByIndex(index);
     confirm(
       "Delete User",
-      `Do you want to delete user ${user.name}?`,
-      () => {
+      `Do you want to delete user <b>${user.name}</b>?`,
+      async () => {
+        let element = document.getElementById("user-" + index);
+        element.classList.add("fade-out");
+        await new Promise(function(resolve) {
+          setTimeout(resolve, 500);
+        });
+
+        element.classList.remove("fade-out");
+
         deleteUserFromArray(index);
+
         setUsers(getArrayOfUsers());
-        props.history.push("/");
+        // props.history.push("/");
       },
       () => {
         console.log("didnt click ok");
@@ -35,7 +56,12 @@ const UsersList = props => {
   return (
     <div>
       <h2 className="line-container">
-        <span style={{ display: Users.length > 0 ? "block" : "none" }}>
+        <span
+          style={{
+            marginBottom: "20px",
+            display: Users.length > 0 ? "block" : "none"
+          }}
+        >
           All Users
         </span>
         <span style={{ display: Users.length === 0 ? "block" : "none" }}>
@@ -46,7 +72,11 @@ const UsersList = props => {
       <div className="columns is-multiline">
         {Users.map((User, index) => {
           return (
-            <div className="column is-half" key={"users-" + index}>
+            <div
+              className="column is-half outerdiv"
+              id={"user-" + index}
+              key={"users-" + index}
+            >
               <div className="card">
                 <div className="card-content">
                   <p className="title" style={{ marginBottom: "40px" }}>
@@ -55,6 +85,7 @@ const UsersList = props => {
                   <p className="subtitle">Age: {User.age}</p>
                   <p className="subtitle">Email: {User.email}</p>
                 </div>
+
                 <footer className="card-footer">
                   <p className="card-footer-item">
                     <span>
@@ -71,7 +102,9 @@ const UsersList = props => {
                     <span>
                       <button
                         onClick={e => {
+                          console.log(index);
                           deleteUser(index);
+                          // deleteUser(index);
                         }}
                       >
                         Delete

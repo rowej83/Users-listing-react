@@ -54,3 +54,17 @@ h1.mainheader {
   padding: 15px 5px 10px 15px;
   /* background-color:red; */
 }
+.fade-out {
+  opacity: 0;
+  transform: scale(0.4);
+  transition: 500ms ease-out;
+}
+.outerdiv {
+  display: none;
+  opacity: 1;
+  transition: all 700ms;
+}
+.outerdiv .fade-in {
+  opacity: 1 !important;
+  transition: opacity 7000ms ease-in;
+}
