@@ -3,8 +3,7 @@ import { withRouter } from "react-router-dom";
 import UsersContext from "../../utils/UsersContext";
 import { confirm } from "alertifyjs";
 import "/../node_modules/alertifyjs/build/css/alertify.css";
-import $ from "jquery";
-
+import { notify } from "alertifyjs";
 import {
   deleteUserFromArray,
   getArrayOfUsers,
@@ -17,42 +16,32 @@ const UsersList = props => {
   const editUser = index => {
     props.history.push("/users/edit/" + index);
   };
-  React.useLayoutEffect(() => {
-    let mount = true;
-    if (mount) {
-      $(".outerdiv").hide();
-      $(".outerdiv").fadeIn();
-    }
 
-    return () => {
-      mount = false;
-    };
-  }, []);
   const deleteUser = index => {
     let user = returnUserByIndex(index);
     confirm(
       "Delete User",
       `Do you want to delete user <b>${user.name}</b>?`,
       async () => {
+        console.log("started");
         let element = document.getElementById("user-" + index);
-        element.classList.add("fade-out");
-        await new Promise(function(resolve) {
-          setTimeout(resolve, 500);
+        console.log(element);
+        element.classList.add(`fade-out`);
+        await new Promise(resolve => {
+          setTimeout(resolve, 200);
         });
-
-        element.classList.remove("fade-out");
-
+        element.classList.remove(`fade-out`);
+        console.log("waited");
         deleteUserFromArray(index);
-
+        notify(`${user.name} has been deleted.`, "success", 3);
         setUsers(getArrayOfUsers());
         // props.history.push("/");
       },
-      () => {
-        console.log("didnt click ok");
-      }
+      () => {}
     );
     // props.history.push("/users/delete/" + index);
   };
+
   return (
     <div>
       <h2 className="line-container">
@@ -71,11 +60,13 @@ const UsersList = props => {
 
       <div className="columns is-multiline">
         {Users.map((User, index) => {
+          //let newID = uuid();
+
           return (
             <div
               className="column is-half outerdiv"
+              key={"user-" + index}
               id={"user-" + index}
-              key={"users-" + index}
             >
               <div className="card">
                 <div className="card-content">
@@ -98,13 +89,12 @@ const UsersList = props => {
                       </button>
                     </span>
                   </p>
+
                   <p className="card-footer-item">
                     <span>
                       <button
                         onClick={e => {
-                          console.log(index);
                           deleteUser(index);
-                          // deleteUser(index);
                         }}
                       >
                         Delete

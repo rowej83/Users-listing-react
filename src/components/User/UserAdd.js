@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import useForm from "react-hook-form";
 import { saveUserToLocalStorage } from "../../utils/StorageHelper";
 import { User } from "../../utils/UserClass";
-import { confirm } from "alertifyjs";
+import { confirm, notify } from "alertifyjs";
 function validateEmail(email) {
   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 }
 const UserAdd = props => {
-  const { handleSubmit, register, errors } = useForm();
+  const { handleSubmit, register, errors, formState } = useForm({
+    mode: "onChange"
+  });
 
   const onSubmit = values => {
     confirm(
@@ -17,6 +19,7 @@ const UserAdd = props => {
       `Add user: <b>${values.name}</b>?`,
       function() {
         saveUserToLocalStorage(new User(values.name, values.age, values.email));
+        notify(`${values.name} has been added.`, "success", 3);
         props.history.push("/");
       },
       function() {
@@ -24,6 +27,17 @@ const UserAdd = props => {
       }
     );
   };
+  const shouldBeEnabled = React.useMemo(() => {
+    if (formState.dirty === false) {
+      return true;
+    } else {
+      if (errors.name || errors.age || errors.email) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  }, [errors, formState.dirty]);
 
   return (
     <div>
@@ -126,10 +140,17 @@ const UserAdd = props => {
             type="submit"
             class="button is-primary"
             style={{ marginRight: "10px" }}
+            disabled={shouldBeEnabled}
           >
             Create
           </button>
-
+          <button
+            onClick={() => {
+              console.log(errors);
+            }}
+          >
+            Test
+          </button>
           <Link to="/" class="button">
             Cancel
           </Link>
