@@ -28,7 +28,7 @@ const UserAdd = props => {
     );
   };
   const shouldBeEnabled = React.useMemo(() => {
-    if (formState.dirty === false) {
+    if (formState.dirty === false || formState.touched.length !== 3) {
       return true;
     } else {
       if (errors.name || errors.age || errors.email) {
@@ -37,7 +37,7 @@ const UserAdd = props => {
         return false;
       }
     }
-  }, [errors, formState.dirty]);
+  }, [errors, formState]);
 
   return (
     <div>
@@ -147,6 +147,7 @@ const UserAdd = props => {
           <button
             onClick={() => {
               console.log(errors);
+              console.log(formState);
             }}
           >
             Test
