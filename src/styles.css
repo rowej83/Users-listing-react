@@ -55,16 +55,25 @@ h1.mainheader {
   /* background-color:red; */
 }
 .fade-out {
-  opacity: 0;
+  opacity: 0 !important;
   transform: scale(0.8);
-  transition: 200ms ease-out;
+  /* display: none; */
+  transition: 1000ms ease-out;
 }
 .outerdiv {
-  display: none;
+  /* display: none; */
   opacity: 1;
-  transition: all 700ms;
+  /* transition: all 700ms; */
 }
 .outerdiv .fade-in {
   opacity: 1 !important;
   transition: opacity 7000ms ease-in;
+}
+.hover-effect {
+  transition: 600ms all;
+  transform: scale(1.04);
+}
+
+.addTransition {
+  transition: 1000ms all;
 }

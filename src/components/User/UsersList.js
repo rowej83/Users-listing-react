@@ -1,9 +1,9 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import UsersContext from "../../utils/UsersContext";
-import { confirm } from "alertifyjs";
+import { confirm, notify } from "alertifyjs";
 import "/../node_modules/alertifyjs/build/css/alertify.css";
-import { notify } from "alertifyjs";
+
 import {
   deleteUserFromArray,
   getArrayOfUsers,
@@ -12,7 +12,7 @@ import {
 
 const UsersList = props => {
   const { Users, setUsers } = React.useContext(UsersContext);
-
+  const refsArray = React.useRef([]);
   const editUser = index => {
     props.history.push("/users/edit/" + index);
   };
@@ -23,23 +23,22 @@ const UsersList = props => {
       "Delete User",
       `Do you want to delete user <b>${user.name}</b>?`,
       async () => {
-        console.log("started");
-        let element = document.getElementById("user-" + index);
-        console.log(element);
-        element.classList.add(`fade-out`);
+        refsArray.current[index].classList.add("fade-out");
         await new Promise(resolve => {
-          setTimeout(resolve, 200);
+          setTimeout(resolve, 1000);
         });
-        element.classList.remove(`fade-out`);
-        console.log("waited");
+        refsArray.current[index].style.display = "none";
+        refsArray.current[index].classList.remove("fade-out");
+        //below is needed to do normal functionality
         deleteUserFromArray(index);
+        console.log(refsArray.current[index]);
+        refsArray.current[index].style.display = "block";
         notify(`${user.name} has been deleted.`, "success", 3);
         setUsers(getArrayOfUsers());
-        // props.history.push("/");
+        props.history.push("/");
       },
       () => {}
     );
-    // props.history.push("/users/delete/" + index);
   };
 
   return (
@@ -60,13 +59,27 @@ const UsersList = props => {
 
       <div className="columns is-multiline">
         {Users.map((User, index) => {
-          //let newID = uuid();
-
           return (
             <div
               className="column is-half outerdiv"
-              key={"user-" + index}
-              id={"user-" + index}
+              key={index}
+              id={index}
+              ref={ref => {
+                refsArray.current[index] = ref; // took this from your guide's example.
+              }}
+              onMouseOver={() => {
+                refsArray.current[index].classList.add("addTransition");
+                refsArray.current[index].style.zIndex = 1000;
+                refsArray.current[index].classList.add("hover-effect");
+              }}
+              onMouseLeave={async () => {
+                refsArray.current[index].classList.remove("hover-effect");
+                refsArray.current[index].style.zIndex = 0;
+                await new Promise(resolve => {
+                  setTimeout(resolve, 1000);
+                });
+                refsArray.current[index].classList.remove("addTransition");
+              }}
             >
               <div className="card">
                 <div className="card-content">

@@ -1,15 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, Link } from "react-router-dom";
-import { User } from "./utils/UserClass";
 import UsersList from "./components/User/UsersList";
 import UserEdit from "./components/User/UserEdit";
 import UserAdd from "./components/User/UserAdd";
 import UsersContext from "./utils/UsersContext";
-import "./styles.css";
-import "../node_modules/bulma/css/bulma.css";
-import { getArrayOfUsers, saveUserToLocalStorage } from "./utils/StorageHelper";
+import { getArrayOfUsers } from "./utils/StorageHelper";
 import { createBrowserHistory } from "history";
+import "../node_modules/bulma/css/bulma.css";
+import "./styles.css";
 
 const customHistory = createBrowserHistory();
 
@@ -31,19 +30,7 @@ function App() {
           >
             User Management
           </h1>
-          <button
-            onClick={() => {
-              // let initialValues = [];
-              localStorage.clear();
-              for (let i = 0; i < 10; i++) {
-                saveUserToLocalStorage(
-                  new User(`jason-${i}`, i, `rowej83-${i}@gmail.com`)
-                );
-              }
-            }}
-          >
-            Reset Users
-          </button>
+
           <div class="section">
             <div class="container">
               <Link

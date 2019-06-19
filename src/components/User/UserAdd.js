@@ -144,14 +144,7 @@ const UserAdd = props => {
           >
             Create
           </button>
-          <button
-            onClick={() => {
-              console.log(errors);
-              console.log(formState);
-            }}
-          >
-            Test
-          </button>
+
           <Link to="/" class="button">
             Cancel
           </Link>
