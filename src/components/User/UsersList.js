@@ -2,7 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import UsersContext from "../../utils/UsersContext";
 import { confirm, notify } from "alertifyjs";
-import "/../node_modules/alertifyjs/build/css/alertify.css";
 
 import {
   deleteUserFromArray,
@@ -31,7 +30,6 @@ const UsersList = props => {
         refsArray.current[index].classList.remove("fade-out");
         //below is needed to do normal functionality
         deleteUserFromArray(index);
-        console.log(refsArray.current[index]);
         refsArray.current[index].style.display = "block";
         notify(`${user.name} has been deleted.`, "success", 3);
         setUsers(getArrayOfUsers());

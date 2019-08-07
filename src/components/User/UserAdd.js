@@ -42,19 +42,19 @@ const UserAdd = props => {
   return (
     <div>
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
-        <h2 class="line-container">
+        <h2 className="line-container">
           <span>Add a new User</span>
         </h2>
         <hr />
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Name</label>
+        <div className="field is-horizontal">
+          <div className="field-label is-normal">
+            <label className="label">Name</label>
           </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
+          <div className="field-body">
+            <div className="field">
+              <p className="control">
                 <input
-                  class="input"
+                  className="input"
                   type="text"
                   name="name"
                   placeholder="Name"
@@ -63,7 +63,7 @@ const UserAdd = props => {
                   })}
                 />
 
-                <span class="error">
+                <span className="error">
                   {errors.name && "Your name is required"}
                 </span>
               </p>
@@ -71,13 +71,13 @@ const UserAdd = props => {
           </div>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Age</label>
+        <div className="field is-horizontal">
+          <div className="field-label is-normal">
+            <label className="label">Age</label>
           </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
+          <div className="field-body">
+            <div className="field">
+              <p className="control">
                 <input
                   ref={register({
                     validate: {
@@ -85,12 +85,12 @@ const UserAdd = props => {
                       isFillIn: value => value.length > 0
                     }
                   })}
-                  class="input"
+                  className="input"
                   type="text"
                   name="age"
                   placeholder="Age"
                 />
-                <span class="error">
+                <span className="error">
                   {errors.age && errors.age.type === "isANumber" && (
                     <span>Your age is invalid</span>
                   )}
@@ -103,15 +103,15 @@ const UserAdd = props => {
           </div>
         </div>
 
-        <div class="field is-horizontal">
-          <div class="field-label is-normal">
-            <label class="label">Email</label>
+        <div className="field is-horizontal">
+          <div className="field-label is-normal">
+            <label className="label">Email</label>
           </div>
-          <div class="field-body">
-            <div class="field">
-              <p class="control">
+          <div className="field-body">
+            <div className="field">
+              <p className="control">
                 <input
-                  class="input"
+                  className="input"
                   type="email"
                   name="email"
                   placeholder="Email"
@@ -122,7 +122,7 @@ const UserAdd = props => {
                     }
                   })}
                 />
-                <span class="error">
+                <span className="error">
                   {errors.email && errors.email.type === "required" && (
                     <span>Email field is required.</span>
                   )}
@@ -135,17 +135,17 @@ const UserAdd = props => {
           </div>
         </div>
 
-        <p class="" style={{ margin: "0 auto", textAlign: "center" }}>
+        <p className="" style={{ margin: "0 auto", textAlign: "center" }}>
           <button
             type="submit"
-            class="button is-primary"
+            className="button is-primary"
             style={{ marginRight: "10px" }}
             disabled={shouldBeEnabled}
           >
             Create
           </button>
 
-          <Link to="/" class="button">
+          <Link to="/" className="button">
             Cancel
           </Link>
         </p>

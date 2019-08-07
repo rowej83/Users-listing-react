@@ -7,7 +7,7 @@ import UserAdd from "./components/User/UserAdd";
 import UsersContext from "./utils/UsersContext";
 import { getArrayOfUsers } from "./utils/StorageHelper";
 import { createBrowserHistory } from "history";
-import "../node_modules/bulma/css/bulma.css";
+import "./bulma.css";
 import "./styles.css";
 
 const customHistory = createBrowserHistory();
@@ -31,8 +31,8 @@ function App() {
             User Management
           </h1>
 
-          <div class="section">
-            <div class="container">
+          <div className="section">
+            <div className="container">
               <Link
                 to="/users/add"
                 className="button is-primary full-size"
